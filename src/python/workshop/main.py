@@ -3,11 +3,11 @@
 import asyncio
 import logging
 
-from lab1 import Lab1
-from lab2 import Lab2
-from lab3 import Lab3
-from lab4 import Lab4
-from lab5 import Lab5
+from labs.lab1 import Lab1
+from labs.lab2 import Lab2
+from labs.lab3 import Lab3
+from labs.lab4 import Lab4
+from labs.lab5 import Lab5
 from terminal_colors import TerminalColors as tc
 
 logging.basicConfig(level=logging.ERROR)

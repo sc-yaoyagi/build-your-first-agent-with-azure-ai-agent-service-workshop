@@ -1,7 +1,7 @@
 # File: lab2.py
 from azure.ai.projects.models import FileSearchTool
 
-from lab_base import LabBase
+from labs.lab_base import LabBase
 
 INSTRUCTIONS_FILE = "instructions/file_search.txt"
 TENTS_DATA_SHEET_FILE = "datasheet/contoso-tents-datasheet.pdf"

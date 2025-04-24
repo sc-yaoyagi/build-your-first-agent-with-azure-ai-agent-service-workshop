@@ -1,5 +1,5 @@
 # File: lab1.py
-from lab_base import LabBase
+from labs.lab_base import LabBase
 
 INSTRUCTIONS_FILE = "instructions/function_calling.txt"
 

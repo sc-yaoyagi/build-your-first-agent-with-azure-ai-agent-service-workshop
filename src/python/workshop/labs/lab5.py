@@ -3,7 +3,7 @@ import os
 
 from azure.ai.projects.models import BingGroundingTool, CodeInterpreterTool, FileSearchTool
 
-from lab_base import LabBase
+from labs.lab_base import LabBase
 
 INSTRUCTIONS_FILE = "instructions/bing_grounding.txt"
 BING_CONNECTION_NAME = os.getenv("BING_CONNECTION_NAME")
