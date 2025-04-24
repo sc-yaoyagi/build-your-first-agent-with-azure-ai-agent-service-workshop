@@ -14,6 +14,7 @@ class Lab4(LabBase):
 
     async def add_agent_tools(self) -> None:
         self.toolset.add(self.functions)
+
         vector_store = await self.utilities.create_vector_store(
             self.project_client,
             files=[TENTS_DATA_SHEET_FILE],
@@ -21,11 +22,14 @@ class Lab4(LabBase):
         )
         file_search_tool = FileSearchTool(vector_store_ids=[vector_store.id])
         self.toolset.add(file_search_tool)
+
         code_interpreter = CodeInterpreterTool()
         self.toolset.add(code_interpreter)
+
         self.font_file_info = await self.utilities.upload_file(
             self.project_client,
             self.utilities.shared_files_path / FONTS_ZIP
         )
         code_interpreter.add_file(file_id=self.font_file_info.id)
+        
         return self.font_file_info

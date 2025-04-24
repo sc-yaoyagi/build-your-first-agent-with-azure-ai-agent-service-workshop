@@ -13,6 +13,7 @@ class Lab2(LabBase):
 
     async def add_agent_tools(self) -> None:
         self.toolset.add(self.functions)
+        
         vector_store = await self.utilities.create_vector_store(
             self.project_client,
             files=[TENTS_DATA_SHEET_FILE],

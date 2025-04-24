@@ -34,8 +34,7 @@ class LabBase(ABC):
         self.toolset = AsyncToolSet()
         self.utilities = Utilities()
         self.sales_data = SalesData(self.utilities)
-        self.functions = AsyncFunctionTool(
-            {self.sales_data.async_fetch_sales_data_using_sqlite_query})
+        self.functions = AsyncFunctionTool({self.sales_data.async_fetch_sales_data_using_sqlite_query})
         self.project_client = AIProjectClient.from_connection_string(
             credential=DefaultAzureCredential(),
             conn_str=PROJECT_CONNECTION_STRING,
@@ -53,7 +52,8 @@ class LabBase(ABC):
                 thread_id=thread.id,
                 agent_id=agent.id,
                 event_handler=StreamEventHandler(
-                    functions=self.functions, project_client=self.project_client, utilities=self.utilities),
+                    functions=self.functions, project_client=self.project_client, utilities=self.utilities
+                ),
                 max_completion_tokens=MAX_COMPLETION_TOKENS,
                 max_prompt_tokens=MAX_PROMPT_TOKENS,
                 temperature=TEMPERATURE,
@@ -80,11 +80,9 @@ class LabBase(ABC):
         try:
             # 3) load & template instructions
             instructions = self.utilities.load_instructions(self.instructions)
-            instructions = instructions.replace(
-                "{database_schema_string}", schema)
+            instructions = instructions.replace("{database_schema_string}", schema)
             if font_info:
-                instructions = instructions.replace(
-                    "{font_file_id}", font_info.id)
+                instructions = instructions.replace("{font_file_id}", font_info.id)
 
             # 4) create agent
             self.agent = await self.project_client.agents.create_agent(

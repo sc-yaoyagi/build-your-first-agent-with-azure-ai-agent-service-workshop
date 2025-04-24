@@ -13,6 +13,7 @@ class Lab3(LabBase):
 
     async def add_agent_tools(self) -> None:
         self.toolset.add(self.functions)
+
         vector_store = await self.utilities.create_vector_store(
             self.project_client,
             files=[TENTS_DATA_SHEET_FILE],
@@ -20,6 +21,6 @@ class Lab3(LabBase):
         )
         file_search_tool = FileSearchTool(vector_store_ids=[vector_store.id])
         self.toolset.add(file_search_tool)
+
         code_interpreter = CodeInterpreterTool()
         self.toolset.add(code_interpreter)
-        return
