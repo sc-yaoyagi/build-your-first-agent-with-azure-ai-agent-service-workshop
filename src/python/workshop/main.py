@@ -1,4 +1,4 @@
-"""Main entry point for the lab project."""
+"""Main entry point for the workshop."""
 
 import asyncio
 import logging
