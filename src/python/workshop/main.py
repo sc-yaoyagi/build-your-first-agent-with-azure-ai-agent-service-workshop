@@ -32,26 +32,28 @@ async def workshop() -> None:
     if lab is None:
         raise ValueError(f"Invalid LAB_NUMBER: {LAB_NUMBER}")
 
-    agent, thread = await lab.initialize()
-    if not agent or not thread:
-        print(f"{tc.BG_BRIGHT_RED}Failed to initialize Lab.{tc.RESET}")
-        return
+    async with lab.project_client:
+        agent, thread = await lab.initialize()
+        
+        if not agent or not thread:
+            print(f"{tc.BG_BRIGHT_RED}Failed to initialize Lab.{tc.RESET}")
+            return
 
-    while True:
-        prompt = input(f"\n\n{tc.GREEN}Enter query (or exit/save): {tc.RESET}").strip()
-        if not prompt:
-            continue
-        cmd = prompt.lower()
-        if cmd in {"exit", "save"}:
-            break
-        await lab.post_message(thread_id=thread.id, content=prompt, agent=agent, thread=thread)
+        while True:
+            prompt = input(f"\n\n{tc.GREEN}Enter query (or exit/save): {tc.RESET}").strip()
+            if not prompt:
+                continue
+            cmd = prompt.lower()
+            if cmd in {"exit", "save"}:
+                break
+            await lab.post_message(thread_id=thread.id, content=prompt, agent=agent, thread=thread)
 
-    if cmd == "save":
-        print("Agent retained for further experimentation in Azure AI Foundry.")
-        print(f"Go to https://ai.azure.com → your project → Playgrounds → select agent ID {agent.id}")
-    else:
-        await lab.cleanup(agent, thread)
-        print("Cleaned up agent resources.")
+        if cmd == "save":
+            print("Agent retained for further experimentation in Azure AI Foundry.")
+            print(f"Go to https://ai.azure.com → your project → Playgrounds → select agent ID {agent.id}")
+        else:
+            await lab.cleanup(agent, thread)
+            print("Cleaned up agent resources.")
 
 
 if __name__ == "__main__":
