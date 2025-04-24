@@ -14,7 +14,7 @@ logging.basicConfig(level=logging.ERROR)
 logger = logging.getLogger(__name__)
 
 # Set your lab:
-LAB_NUMBER = 2
+LAB_NUMBER = 1
 
 lab_classes = {
     1: Lab1,
