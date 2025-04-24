@@ -25,7 +25,7 @@ lab_classes = {
 }
 
 
-async def main() -> None:
+async def workshop() -> None:
     """Main function to run the lab."""
 
     lab = lab_classes.get(LAB_NUMBER)()
@@ -55,4 +55,4 @@ async def main() -> None:
 
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    asyncio.run(workshop())
