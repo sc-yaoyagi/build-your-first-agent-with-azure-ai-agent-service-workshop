@@ -1,4 +1,5 @@
 """Main entry point for the lab project."""
+
 import asyncio
 import logging
 
@@ -12,24 +13,32 @@ from terminal_colors import TerminalColors as tc
 logging.basicConfig(level=logging.ERROR)
 logger = logging.getLogger(__name__)
 
-# Choose your lab:
-lab = Lab1()
-# lab = Lab2()
-# lab = Lab3()
-# lab = Lab4()
-# lab = Lab5()
+# Set your lab:
+LAB_NUMBER = 2
+
+lab_classes = {
+    1: Lab1,
+    2: Lab2,
+    3: Lab3,
+    4: Lab4,
+    5: Lab5,
+}
 
 
 async def main() -> None:
-    # Delegate initialization into the base class
+    """Main function to run the lab."""
+
+    lab = lab_classes.get(LAB_NUMBER)()
+    if lab is None:
+        raise ValueError(f"Invalid LAB_NUMBER: {LAB_NUMBER}")
+
     agent, thread = await lab.initialize()
     if not agent or not thread:
         print(f"{tc.BG_BRIGHT_RED}Failed to initialize Lab.{tc.RESET}")
         return
 
     while True:
-        prompt = input(
-            f"\n\n{tc.GREEN}Enter query (or exit/save): {tc.RESET}").strip()
+        prompt = input(f"\n\n{tc.GREEN}Enter query (or exit/save): {tc.RESET}").strip()
         if not prompt:
             continue
         cmd = prompt.lower()
@@ -39,8 +48,7 @@ async def main() -> None:
 
     if cmd == "save":
         print("Agent retained for further experimentation in Azure AI Foundry.")
-        print(
-            f"Go to https://ai.azure.com → your project → Playgrounds → select agent ID {agent.id}")
+        print(f"Go to https://ai.azure.com → your project → Playgrounds → select agent ID {agent.id}")
     else:
         await lab.cleanup(agent, thread)
         print("Cleaned up agent resources.")
